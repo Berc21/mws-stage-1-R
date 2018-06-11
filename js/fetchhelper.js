@@ -22,7 +22,7 @@ class FetchHelper {
     xhr.send();
   }
 
-  fetchByID(id, callback) {
+  filterById(id, callback) {
     this.fetch((err, restaurants) => {
       if (err) {
         callback(err, null);
@@ -44,4 +44,4 @@ const test = new FetchHelper(url);
 
 test.fetch((err, data) => console.log(data) );
 
-test.fetchByID(5, (err, restaurant) => console.log(restaurant) );
+test.filterById(5, (err, restaurant) => console.log(restaurant) );
