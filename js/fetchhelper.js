@@ -40,8 +40,8 @@ class FetchHelper {
 
 const url = "/data/restaurants.json";
 
-const test = new FetchHelper(url);
+const restaurantsJson = new FetchHelper(url);
 
-test.fetch((err, data) => console.log(data) );
+restaurantsJson.fetch((err, data) => console.log(data) );
 
-test.filterById(5, (err, restaurant) => console.log(restaurant) );
+restaurantsJson.filterById(5, (err, restaurant) => console.log(restaurant) );
