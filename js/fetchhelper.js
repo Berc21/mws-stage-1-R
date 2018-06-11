@@ -27,6 +27,7 @@ class FetchHelper {
       if (err) {
         callback(err, null);
       } else {
+
         const restaurant = restaurants.find(r => r.id == id);
         if (restaurant) { // Got the restaurant
           callback(null, restaurant);
@@ -36,6 +37,22 @@ class FetchHelper {
       }
     } );
   }
+
+  filterByCuisine(cuisine, callback) {
+    this.fetch((err, restaurants) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        const restaurant = restaurants.filter(r => r.cuisine_type == cuisine);
+        if (restaurant) { // Got the restaurant
+          callback(null, restaurant);
+        } else { // Restaurant does not exist in the database
+          callback('Restaurant does not exist', null);
+        }
+      }
+    } );
+  }
+  
 }
 
 const url = "/data/restaurants.json";
@@ -44,4 +61,6 @@ const restaurantsJson = new FetchHelper(url);
 
 restaurantsJson.fetch((err, data) => console.log(data) );
 
-restaurantsJson.filterById(5, (err, restaurant) => console.log(restaurant) );
+restaurantsJson.filterById(7, (err, restaurant) => console.log(restaurant) );
+
+restaurantsJson.filterByCuisine('American', (err, restaurant) => console.log(restaurant) );
