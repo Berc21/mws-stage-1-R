@@ -121,6 +121,26 @@ class FetchHelper {
     });
   }
 
+  urlForRestaurant(restaurant) {
+    return (`./restaurant.html?id=${restaurant.id}`);
+  }
+
+
+  imageUrlForRestaurant(restaurant) {
+    return (`/img/${restaurant.photograph}`);
+  }
+
+  mapMarker(restaurant, map) {
+    // https://leafletjs.com/reference-1.3.0.html#marker  
+    const marker = new L.marker([restaurant.latlng.lat, restaurant.latlng.lng],
+      {title: restaurant.name,
+      alt: restaurant.name,
+      url: this.urlForRestaurant(restaurant)
+      })
+      marker.addTo(newMap);
+    return marker;
+  } 
+
 
 }
 
