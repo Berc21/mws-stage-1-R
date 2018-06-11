@@ -74,22 +74,38 @@ class FetchHelper {
   }
 
   filterByCuisineAndNeighborhood(cuisine, neighborhood, callback) {
-    // Fetch all restaurants
+
     this.fetch((err, restaurants) => {
       if (err) {
         callback(err, null);
       } else {
         let results = restaurants
-        if (cuisine != 'all') { // filter by cuisine
+        if (cuisine != 'all') { 
           results = results.filter(r => r.cuisine_type == cuisine);
         }
-        if (neighborhood != 'all') { // filter by neighborhood
+        if (neighborhood != 'all') {
           results = results.filter(r => r.neighborhood == neighborhood);
         }
         callback(null, results);
       }
     });
   }
+
+  fetchNeighborhoods(callback) {
+    // Fetch all restaurants
+    this.fetch((err, restaurants) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        // Get all neighborhoods from all restaurants
+        const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood)
+        // Remove duplicates from neighborhoods
+        const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i)
+        callback(null, uniqueNeighborhoods);
+      }
+    });
+  }
+
 }
 
 const url = "/data/restaurants.json";
@@ -105,3 +121,5 @@ restaurantsJson.filterByCuisine('American', (err, restaurant) => console.log(res
 restaurantsJson.filterByNeighborhood('Manhattan', (err, restaurant) => console.log(restaurant));
 
 restaurantsJson.filterByCuisineAndNeighborhood('American', 'Manhattan', (err, restaurant) => console.log(restaurant));
+
+restaurantsJson.fetchNeighborhoods((err, neighborhoods) => console.log(neighborhoods));
