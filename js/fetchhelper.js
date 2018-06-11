@@ -24,4 +24,9 @@ class FetchHelper {
 
 }
 
+const url = "/data/restaurants.json";
+
+const test = new FetchHelper(url);
+
+test.fetch((err, data) => console.log(data) );
 
