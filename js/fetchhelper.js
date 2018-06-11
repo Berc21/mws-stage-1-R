@@ -22,6 +22,20 @@ class FetchHelper {
     xhr.send();
   }
 
+  fetchByID(id, callback) {
+    this.fetch((err, restaurants) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        const restaurant = restaurants.find(r => r.id == id);
+        if (restaurant) { // Got the restaurant
+          callback(null, restaurant);
+        } else { // Restaurant does not exist in the database
+          callback('Restaurant does not exist', null);
+        }
+      }
+    } );
+  }
 }
 
 const url = "/data/restaurants.json";
@@ -30,3 +44,4 @@ const test = new FetchHelper(url);
 
 test.fetch((err, data) => console.log(data) );
 
+test.fetchByID(5, (err, restaurant) => console.log(restaurant) );
